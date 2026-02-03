@@ -1,0 +1,31 @@
+import { BlockReducer } from './reducer'
+import { BlockDiff } from './protocol'
+
+type Listener = (diff: BlockDiff) => void
+
+export class StreamDownController {
+  private reducer = new BlockReducer()
+  private listeners: Listener[] = []
+
+  push(token: string) {
+    const diffs = this.reducer.push(token)
+    diffs.forEach(diff => {
+      this.listeners.forEach(l => l(diff))
+    })
+  }
+
+  close() {
+    this.reducer.close()
+  }
+
+  subscribe(listener: Listener): () => void {
+    this.listeners.push(listener)
+    return () => {
+      this.listeners = this.listeners.filter(l => l !== listener)
+    }
+  }
+}
+
+export function createStreamDown() {
+  return new StreamDownController()
+}

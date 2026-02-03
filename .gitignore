@@ -1,0 +1,15 @@
+# ArkTS / HarmonyOS
+build/
+.hvigor/
+.cache/
+
+# IDE
+.idea/
+.vSCode/
+*.iml
+
+# Logs
+*.log
+
+# OS
+.DS_Store
