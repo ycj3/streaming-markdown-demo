@@ -1,9 +1,9 @@
-import { Block, BlockDiff } from "./protocol";
+import { Block, BlockDiff, CodeBlock } from "./protocol";
 
 enum Mode {
   Paragraph,
-  FenceStart,
-  Code,
+  FenceStart,    // After opening ```, collecting language
+  Code,          // Inside code block, collecting code
 }
 
 export class BlockReducer {
@@ -13,7 +13,7 @@ export class BlockReducer {
 
   private mode: Mode = Mode.Paragraph;
   private backticks = 0;
-  private fenceLang = "";
+  private langBuffer = "";  // Buffer for collecting language identifier
 
   push(token: string): BlockDiff[] {
     const diffs: BlockDiff[] = [];
@@ -37,13 +37,15 @@ export class BlockReducer {
     if (this.backticks === 3) {
       // Handle code fence
       this.backticks = 0; // Reset backticks after detecting a fence
-      if (this.mode === Mode.FenceStart) {
+      if (this.mode === Mode.Code || this.mode === Mode.FenceStart) {
         // Close code block
         this.mode = Mode.Paragraph;
         this.current = null;
+        this.langBuffer = "";
       } else {
-        // Open code block
+        // Open code block - switch to FenceStart mode to capture language
         this.mode = Mode.FenceStart;
+        this.langBuffer = "";
         this.current = {
           id: this.id++,
           type: "code",
@@ -56,6 +58,25 @@ export class BlockReducer {
     }
 
     if (this.mode === Mode.FenceStart) {
+      // Collecting language identifier
+      if (token === "\n") {
+        // End of language line, switch to Code mode
+        if (this.current && this.current.type === 'code' && this.langBuffer.trim()) {
+          (this.current as CodeBlock).lang = this.langBuffer.trim();
+          // Update the block with language info
+          diffs.push({
+            kind: "patch",
+            id: this.current.id,
+            block: { ...this.current },
+          });
+        }
+        this.mode = Mode.Code;
+        this.langBuffer = "";
+      } else {
+        // Collect language characters
+        this.langBuffer += token;
+      }
+    } else if (this.mode === Mode.Code) {
       // Append to code block
       this.appendToCode(token, diffs);
     } else {
@@ -74,6 +95,7 @@ export class BlockReducer {
   private finishCurrent() {
     this.current = null;
     this.backticks = 0;
+    this.langBuffer = "";
   }
 
   private appendToParagraph(token: string, diffs: BlockDiff[]) {

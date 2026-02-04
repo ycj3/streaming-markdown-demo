@@ -10,9 +10,15 @@ struct Index {
     // const text = 'Hello, this is a streaming markdown demo.\n\nIt feels like ChatGPT.'
     const text = `
 Here is some code:
-\`\`\`
-const a = 1
-console.log(a)
+\`\`\`typescript
+// Calculate factorial
+const factorial = (n: number): number => {
+  if (n <= 1) return 1;
+  return n * factorial(n - 1);
+};
+
+const result = factorial(5);
+console.log("Result: " + result);
 \`\`\`
 Streaming works!
 `

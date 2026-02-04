@@ -4,7 +4,7 @@ import { BlockView } from './BlockView'
 
 @Component
 export struct StreamDown {
-  controller!: StreamDownController
+  controller: StreamDownController = new StreamDownController()
 
   @State private blocks: Block[] = []
 
@@ -16,12 +16,7 @@ export struct StreamDown {
         const idx = this.blocks.findIndex(b => b.id === diff.id)
         if (idx >= 0) {
           const newBlocks = [...this.blocks];
-          const updatedBlock: Block = {
-            id: diff.block.id,
-            type: diff.block.type,
-            text: diff.block.text
-          };
-          newBlocks[idx] = updatedBlock
+          newBlocks[idx] = diff.block
           this.blocks = newBlocks
           console.info('Successfully patched block:', diff.id, 'New text:', diff.block.text);
         }
