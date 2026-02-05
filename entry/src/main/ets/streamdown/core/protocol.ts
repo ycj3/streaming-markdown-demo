@@ -14,6 +14,9 @@ export type CodeBlock = {
 export class TextSegment {
   content: string = ""
   isCode: boolean = false
+  isBold: boolean = false
+  isItalic: boolean = false
+  isStrikethrough: boolean = false
 }
 
 export type Block = ParagraphBlock | CodeBlock

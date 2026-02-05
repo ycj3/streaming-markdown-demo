@@ -1,37 +1,15 @@
 import { Block, CodeBlock, TextSegment } from '../core/protocol'
 import { CodeBlockHeader } from './code-block/CodeBlockHeader'
 import { CodeBlockBody } from './code-block/CodeBlockBody'
+import { parseInlineStyles } from '../core/utils/inline-style-parser'
+
 @Component
 export struct BlockView {
   @Prop block: Block;
 
+  // Helper to parse segments from the paragraph text
   parseSegments(text: string): TextSegment[] {
-    let segments: TextSegment[] = [];
-    let regex = /`([^`]+)`/g;
-    let lastIndex = 0;
-    let match: RegExpExecArray | null;
-
-    while ((match = regex.exec(text)) !== null) {
-      if (match.index > lastIndex) {
-        let seg = new TextSegment();
-        seg.content = text.substring(lastIndex, match.index);
-        seg.isCode = false;
-        segments.push(seg);
-      }
-      let codeSeg = new TextSegment();
-      codeSeg.content = match[1];
-      codeSeg.isCode = true;
-      segments.push(codeSeg);
-      lastIndex = regex.lastIndex;
-    }
-
-    if (lastIndex < text.length) {
-      let lastSeg = new TextSegment();
-      lastSeg.content = text.substring(lastIndex);
-      lastSeg.isCode = false;
-      segments.push(lastSeg);
-    }
-    return segments;
+    return parseInlineStyles(text);
   }
 
   build() {
@@ -39,20 +17,24 @@ export struct BlockView {
       if (this.block.type === 'paragraph') {
         Text() {
           ForEach(this.parseSegments(this.block.text), (seg: TextSegment) => {
-            if (seg.isCode) {
-              Span(seg.content)
-                .fontFamily('monospace')
-                .fontColor('#D32F2F')
-                .fontSize(14)
-                .textBackgroundStyle({ color: '#F5F5F5', radius: 4 })
-            } else {
-              Span(seg.content)
-                .fontSize(16)
-                .fontColor('#333333')
-            }
+            Span(seg.content)
+              .fontSize(16)
+              // Use monospace for code, otherwise standard sans-serif
+              .fontFamily(seg.isCode ? 'monospace' : 'sans-serif')
+              // Code usually has a distinct color
+              .fontColor(seg.isCode ? '#D32F2F' : '#333333')
+              .fontWeight(seg.isBold ? FontWeight.Bold : FontWeight.Normal)
+              .fontStyle(seg.isItalic ? FontStyle.Italic : FontStyle.Normal)
+              .decoration({
+                type: seg.isStrikethrough ? TextDecorationType.LineThrough : TextDecorationType.None,
+                color: seg.isCode ? '#D32F2F' : '#333333' // Color is required for some engine versions
+              })
+              // Inline code background style
+              .textBackgroundStyle(seg.isCode ? { color: '#F5F5F5', radius: 4 } : undefined)
           })
         }
         .width('100%')
+        .margin({ bottom: 8 })
       } else if (this.block.type === 'code') {
         Column() {
           CodeBlockHeader({

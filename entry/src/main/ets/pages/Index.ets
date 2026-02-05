@@ -7,21 +7,31 @@ struct Index {
   private stream = createStreamDown()
 
   aboutToAppear() {
-    // const text = 'Hello, this is a streaming markdown demo.\n\nIt feels like ChatGPT.'
+// Demo text with various inline styles
     const text = `
-Here is some code:
-\`\`\`typescript
-// Calculate factorial
-const factorial = (n: number): number => {
-  if (n <= 1) return 1;
-  return n * factorial(n - 1);
-};
+StreamDown Demo
 
-const result = factorial(5);
-console.log("Result: " + result);
+Welcome to **StreamDown** - A streaming markdown renderer for HarmonyOS!
+
+1. Inline Styles
+- **Bold text** with double asterisks
+- *Italic text* with single asterisks
+- ~~Strikethrough text~~ with double tildes
+- ***Bold and Italic*** combined
+
+2. Inline Code Priority
+- Normal \`inline code\`
+- Verbatim: \`**this is not bold**\` (Markdown standard: code shields styles)
+- Mixed: **Bold** and then \`code\`
+
+3. Fenced Code Block
+\`\`\`typescript
+function hello() {
+  console.log("Hello StreamDown!");
+}
 \`\`\`
-You can also use \`inline code\` like this!
-Streaming works!
+
+Enjoy the smooth streaming experience! 🚀
 `
     let i = 0
 

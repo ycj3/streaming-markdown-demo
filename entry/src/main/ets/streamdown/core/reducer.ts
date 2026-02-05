@@ -98,18 +98,11 @@ export class BlockReducer {
     this.pendingBackticks = 0;
 
     if (count === 1) {
-      this.mode =
-        this.mode === ParseMode.InlineCode
-          ? ParseMode.Paragraph
-          : ParseMode.InlineCode;
+      // Simply toggle the internal mode and push the marker into the text
+      this.mode = this.mode === ParseMode.InlineCode ? ParseMode.Paragraph : ParseMode.InlineCode;
       this.appendToParagraph("`", diffs);
     } else {
-      const ticks = "`".repeat(count);
-      if (this.mode === ParseMode.Code) {
-        this.appendToCurrentBlock(ticks, diffs);
-      } else {
-        this.appendToParagraph(ticks, diffs);
-      }
+      this.appendToParagraph("``", diffs);
     }
   }
 

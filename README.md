@@ -8,7 +8,12 @@ A streaming markdown renderer demo in ArkTS for HarmonyOS
 - [x] Code Block with triple backticks
   - [x] copy code
   - [x] syntax highlight
-- [x] Inline code with single backticks(js, ts)
+- [x] Inline code with single backticks
+- [x] Text styles
+  - [x] **Bold** with `**text**`
+  - [x] _Italic_ with `*text*` or `_text_`
+  - [x] **_Bold + Italic_** with `***text***`
+  - [x] ~~Strikethrough~~ with `~~text~~`
 
 ## Run
 
