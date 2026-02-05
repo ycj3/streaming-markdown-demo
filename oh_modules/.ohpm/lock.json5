@@ -10,7 +10,12 @@
   "modules": {
     ".": {
       "name": "",
-      "dependencies": {},
+      "dependencies": {
+        "@ycj3/streamdown": {
+          "specifier": "file:streamdown",
+          "version": "file:streamdown"
+        }
+      },
       "devDependencies": {
         "@ohos/hypium": {
           "specifier": "1.0.24",
@@ -26,6 +31,18 @@
     },
     "entry": {
       "name": "entry",
+      "dependencies": {
+        "@ycj3/streamdown": {
+          "specifier": "file:streamdown",
+          "version": "file:streamdown"
+        }
+      },
+      "devDependencies": {},
+      "dynamicDependencies": {},
+      "maskedByOverrideDependencyMap": false
+    },
+    "streamdown": {
+      "name": "streamdown",
       "dependencies": {},
       "devDependencies": {},
       "dynamicDependencies": {},
@@ -33,6 +50,14 @@
     }
   },
   "packages": {
+    "@ycj3/streamdown@file:streamdown": {
+      "storePath": "streamdown",
+      "dependencies": {},
+      "dynamicDependencies": {},
+      "dev": false,
+      "dynamic": false,
+      "maskedByOverrideDependencyMap": false
+    },
     "@ohos/hypium@1.0.24": {
       "integrity": "sha512-3dCqc+BAR5LqEGG2Vtzi8O3r7ci/3fYU+FWjwvUobbfko7DUnXGOccaror0yYuUhJfXzFK0aZNMGSnXaTwEnbw==",
       "storePath": "oh_modules/.ohpm/@ohos+hypium@1.0.24",

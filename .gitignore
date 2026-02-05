@@ -2,6 +2,7 @@
 build/
 .hvigor/
 .cache/
+oh_modules/
 
 # IDE
 .idea/
@@ -13,3 +14,7 @@ build/
 
 # OS
 .DS_Store
+
+
+# Kimi
+AGENTS.md

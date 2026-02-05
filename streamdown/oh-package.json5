@@ -1,0 +1,9 @@
+{
+  "name": "@ycj3/streamdown",
+  "version": "0.1.0",
+  "description": "Streaming markdown block renderer for ArkTS",
+  "main": "src/main/ets/index.ets",
+  "keywords": ["streaming", "markdown", "arkts", "llm"],
+  "license": "MIT",
+  "dependencies": {}
+}

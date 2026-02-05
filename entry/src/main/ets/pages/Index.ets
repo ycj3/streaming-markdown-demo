@@ -1,5 +1,5 @@
-import { createStreamDown } from '../streamdown/core/stream'
-import { StreamDown } from '../streamdown/ui/StreamDown'
+import { StreamDown, createStreamDown } from '@ycj3/streamdown'
+
 
 @Entry
 @Component
