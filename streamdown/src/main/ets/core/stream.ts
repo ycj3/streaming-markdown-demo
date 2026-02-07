@@ -15,7 +15,10 @@ export class StreamDownController {
   }
 
   close() {
-    this.reducer.close()
+    const diffs = this.reducer.close()
+    diffs.forEach(diff => {
+      this.listeners.forEach(l => l(diff))
+    })
   }
 
   subscribe(listener: Listener): () => void {
