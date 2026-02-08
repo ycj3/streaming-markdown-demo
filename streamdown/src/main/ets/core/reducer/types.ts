@@ -15,6 +15,8 @@ export enum ParseMode {
   Code = "code",
   /** Inline code */
   InlineCode = "inlineCode",
+  /** Unordered list item */
+  List = "list",
 }
 
 /**

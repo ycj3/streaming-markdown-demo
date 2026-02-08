@@ -7,6 +7,7 @@ export {
   HeadingReducer,
   CodeFenceReducer,
   InlineCodeReducer,
+  ListReducer,
 } from "./reducer/index";
 
 export type {

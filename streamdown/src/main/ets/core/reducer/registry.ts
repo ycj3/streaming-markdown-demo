@@ -1,4 +1,5 @@
 import { IReducer, ParseMode } from "./types";
+import { ListReducer } from "./reducers/ListReducer";
 
 /**
  * Reducer registry
@@ -75,7 +76,8 @@ export function createDefaultRegistry(
   paragraphReducer: IReducer,
   headingReducer: IReducer,
   codeFenceReducer: IReducer,
-  inlineCodeReducer: IReducer
+  inlineCodeReducer: IReducer,
+  listReducer: IReducer
 ): ReducerRegistry {
   const registry = new ReducerRegistry();
 
@@ -85,12 +87,14 @@ export function createDefaultRegistry(
   registry.register(ParseMode.FenceStart, codeFenceReducer);
   registry.register(ParseMode.Code, codeFenceReducer);
   registry.register(ParseMode.InlineCode, inlineCodeReducer);
+  registry.register(ParseMode.List, listReducer);
 
   // Register triggers (sorted by priority)
   // Note: trigger order is important
   registry.registerTrigger(headingReducer);
   registry.registerTrigger(inlineCodeReducer);
   registry.registerTrigger(codeFenceReducer);
+  registry.registerTrigger(listReducer);
 
   return registry;
 }

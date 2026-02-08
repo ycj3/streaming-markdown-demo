@@ -6,6 +6,7 @@ import {
   HeadingReducer,
   CodeFenceReducer,
   InlineCodeReducer,
+  ListReducer,
 } from "./reducers";
 import { ReducerRegistry, createDefaultRegistry } from "./registry";
 import {
@@ -23,6 +24,7 @@ export {
   HeadingReducer,
   CodeFenceReducer,
   InlineCodeReducer,
+  ListReducer,
 } from "./reducers";
 
 /**
@@ -55,6 +57,7 @@ export class BlockReducer {
   private headingReducer: HeadingReducer;
   private codeFenceReducer: CodeFenceReducer;
   private inlineCodeReducer: InlineCodeReducer;
+  private listReducer: ListReducer;
 
   constructor(registry?: ReducerRegistry) {
     // Initialize context
@@ -64,6 +67,7 @@ export class BlockReducer {
     this.headingReducer = new HeadingReducer();
     this.codeFenceReducer = new CodeFenceReducer();
     this.inlineCodeReducer = new InlineCodeReducer();
+    this.listReducer = new ListReducer();
     const paragraphReducer = new ParagraphReducer();
 
     // Use provided registry or create default
@@ -73,7 +77,8 @@ export class BlockReducer {
         paragraphReducer,
         this.headingReducer,
         this.codeFenceReducer,
-        this.inlineCodeReducer
+        this.inlineCodeReducer,
+        this.listReducer
       );
   }
 
@@ -238,6 +243,11 @@ export class BlockReducer {
     // Check heading trigger
     if (this.headingReducer.canStartHeading(char, this.context)) {
       return this.headingReducer.startHeading(this.context);
+    }
+
+    // Check list trigger (only if not a heading start)
+    if (this.listReducer.canStartList(char, this.context)) {
+      return this.listReducer.startList(this.context);
     }
 
     // Check inline code trigger

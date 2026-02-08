@@ -24,7 +24,13 @@ Welcome to **StreamDown** - A streaming markdown renderer for HarmonyOS!
 - Verbatim: \`**this is not bold**\` (Markdown standard: code shields styles)
 - Mixed: **Bold** and then \`code\`
 
-## 3. Fenced Code Block
+## 3. Unordered Lists
+- First item with **bold**
+- Second item with *italic*
+- Third item with \`inline code\`
+- Nested styles: ***bold italic*** and ~~strikethrough~~
+
+## 4. Fenced Code Block
 \`\`\`typescript
 function hello() {
   console.log("Hello StreamDown!");

@@ -92,6 +92,7 @@ export class HeadingReducer extends BaseReducer {
       if (char === "\n") {
         // End of heading, switch to paragraph mode for next block
         context.mode = ParseMode.Paragraph;
+        context.currentBlock = null;  // Clear current block for next block detection
         return this.noChange();
       }
       

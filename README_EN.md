@@ -60,7 +60,7 @@
 
 > Extended Markdown syntax support
 
-- [ ] Unordered lists (`- item`)
+- [x] Unordered lists (`- item`)
 - [ ] Ordered lists (`1. item`)
 - [ ] Task lists (`- [ ] task`)
 - [ ] Blockquotes (`> quote`)

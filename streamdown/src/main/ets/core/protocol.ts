@@ -24,6 +24,12 @@ export type InlineCodeBlock = {
   text: string
 }
 
+export type ListItemBlock = {
+  id: number
+  type: 'listItem'
+  text: string
+}
+
 export class TextSegment {
   content: string = ""
   isCode: boolean = false
@@ -32,7 +38,7 @@ export class TextSegment {
   isStrikethrough: boolean = false
 }
 
-export type Block = ParagraphBlock | CodeBlock | HeadingBlock | InlineCodeBlock
+export type Block = ParagraphBlock | CodeBlock | HeadingBlock | InlineCodeBlock | ListItemBlock
 
 export type BlockDiff =
   | { kind: 'append'; block: Block }
