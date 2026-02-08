@@ -65,7 +65,7 @@
 - [x] Task lists (`- [ ] task`)
 - [x] Blockquotes (`> quote`)
 - [x] Horizontal rules (`---`)
-- [ ] Link rendering (`[text](url)`)
+- [x] Link rendering (`[text](url)`)
 
 ### v1.2.0 (Planned)
 

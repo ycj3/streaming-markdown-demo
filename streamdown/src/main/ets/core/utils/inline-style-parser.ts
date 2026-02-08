@@ -12,11 +12,14 @@ enum TokenType {
   STRIKETHROUGH_OPEN = "strike_open",
   STRIKETHROUGH_CLOSE = "strike_close",
   CODE = "code",
+  LINK_TEXT = "link_text",
+  LINK_URL = "link_url",
 }
 
 interface Token {
   type: TokenType;
   value: string;
+  url?: string;
 }
 
 class Tokenizer {
@@ -51,8 +54,21 @@ class Tokenizer {
         }
       }
 
-      // 2. Strikethrough: Handles double tildes ~~
-      // Fixed: Ensure pos increments by 2 to avoid infinite loop
+      // 2. Link: [text](url)
+      if (char === "[") {
+        const linkEnd = this.parseLink();
+        if (linkEnd) {
+          tokens.push({
+            type: TokenType.LINK_TEXT,
+            value: linkEnd.text,
+            url: linkEnd.url,
+          });
+          this.pos = linkEnd.newPos;
+          continue;
+        }
+      }
+
+      // 3. Strikethrough: Handles double tildes ~~
       if (char === "~" && next === "~") {
         this.isStrikeOpen = !this.isStrikeOpen;
         tokens.push({
@@ -65,7 +81,7 @@ class Tokenizer {
         continue;
       }
 
-      // 3. Bold & Italic: Handles ***, **, and *
+      // 4. Bold & Italic: Handles ***, **, and *
       if (char === "*") {
         // Triple asterisks: Bold + Italic
         if (next === "*" && this.text[this.pos + 2] === "*") {
@@ -106,12 +122,12 @@ class Tokenizer {
         continue;
       }
 
-      // 4. Plain Text: Consume until next potential marker
+      // 5. Plain Text: Consume until next potential marker
       let textVal = char;
       this.pos++;
       while (
         this.pos < this.text.length &&
-        !"*~`".includes(this.text[this.pos])
+        !"*~`[".includes(this.text[this.pos])
       ) {
         textVal += this.text[this.pos];
         this.pos++;
@@ -119,6 +135,32 @@ class Tokenizer {
       tokens.push({ type: TokenType.TEXT, value: textVal });
     }
     return tokens;
+  }
+
+  /**
+   * Try to parse a link [text](url)
+   * Returns null if not a valid link
+   */
+  private parseLink(): { text: string; url: string; newPos: number } | null {
+    // Find closing ]
+    const closeBracket = this.text.indexOf("]", this.pos + 1);
+    if (closeBracket === -1) return null;
+
+    // Check if next char is (
+    if (this.text[closeBracket + 1] !== "(") return null;
+
+    // Find closing )
+    const closeParen = this.text.indexOf(")", closeBracket + 2);
+    if (closeParen === -1) return null;
+
+    const linkText = this.text.substring(this.pos + 1, closeBracket);
+    const linkUrl = this.text.substring(closeBracket + 2, closeParen);
+
+    return {
+      text: linkText,
+      url: linkUrl,
+      newPos: closeParen + 1,
+    };
   }
 }
 
@@ -165,6 +207,17 @@ export function parseInlineStyles(text: string): TextSegment[] {
         seg.isCode = token.type === TokenType.CODE;
         segments.push(seg);
         break;
+
+      case TokenType.LINK_TEXT:
+        const linkSeg = new TextSegment();
+        linkSeg.content = token.value;
+        linkSeg.isBold = bold;
+        linkSeg.isItalic = italic;
+        linkSeg.isStrikethrough = strike;
+        linkSeg.isLink = true;
+        linkSeg.linkUrl = token.url || "";
+        segments.push(linkSeg);
+        break;
     }
   });
 
@@ -183,11 +236,22 @@ function mergeSegments(segments: TextSegment[]): TextSegment[] {
   for (let i = 1; i < segments.length; i++) {
     const next = segments[i];
 
+    // Don't merge links with different URLs
+    if (current.isLink || next.isLink) {
+      if (current.isLink !== next.isLink || current.linkUrl !== next.linkUrl) {
+        result.push(current);
+        current = next;
+        continue;
+      }
+    }
+
     const sameStyle =
       current.isCode === next.isCode &&
       current.isBold === next.isBold &&
       current.isItalic === next.isItalic &&
-      current.isStrikethrough === next.isStrikethrough;
+      current.isStrikethrough === next.isStrikethrough &&
+      current.isLink === next.isLink &&
+      current.linkUrl === next.linkUrl;
 
     if (sameStyle) {
       current.content += next.content;

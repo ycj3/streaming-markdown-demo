@@ -2,6 +2,8 @@ import { Block, CodeBlock, TextSegment, HeadingBlock, ListItemBlock, OrderedList
 import { CodeBlockHeader } from './code-block/CodeBlockHeader'
 import { CodeBlockBody } from './code-block/CodeBlockBody'
 import { parseInlineStyles } from '../core/utils/inline-style-parser'
+import { common } from '@kit.AbilityKit';
+import { BusinessError } from '@kit.BasicServicesKit';
 
 @Component
 export struct BlockView {
@@ -12,6 +14,18 @@ export struct BlockView {
     return parseInlineStyles(text);
   }
 
+  // Open link URL in system browser
+  openLink(url: string) {
+    const context = getContext(this) as common.UIAbilityContext;
+    context.openLink(url)
+      .then(() => {
+        console.info('open link success');
+      })
+      .catch((error: BusinessError) => {
+        console.error('open link failed: ' + JSON.stringify(error));
+      });
+  }
+
   build() {
     Column() {
       if (this.block.type === 'heading') {
@@ -20,14 +34,19 @@ export struct BlockView {
             Span(seg.content)
               .fontSize(this.getHeadingSize((this.block as HeadingBlock).level))
               .fontWeight(FontWeight.Bold)
-              .fontColor('#1A1A1A')
+              .fontColor(seg.isLink ? '#1976D2' : '#1A1A1A')
               .fontFamily(seg.isCode ? 'monospace' : 'sans-serif')
               .fontStyle(seg.isItalic ? FontStyle.Italic : FontStyle.Normal)
               .decoration({
-                type: seg.isStrikethrough ? TextDecorationType.LineThrough : TextDecorationType.None,
-                color: '#1A1A1A'
+                type: seg.isStrikethrough ? TextDecorationType.LineThrough : seg.isLink ? TextDecorationType.Underline : TextDecorationType.None,
+                color: seg.isLink ? '#1976D2' : '#1A1A1A'
               })
               .textBackgroundStyle(seg.isCode ? { color: '#F5F5F5', radius: 4 } : undefined)
+              .onClick(() => {
+                if (seg.isLink && seg.linkUrl) {
+                  this.openLink(seg.linkUrl);
+                }
+              })
           })
         }
         .width('100%')
@@ -40,15 +59,20 @@ export struct BlockView {
               // Use monospace for code, otherwise standard sans-serif
               .fontFamily(seg.isCode ? 'monospace' : 'sans-serif')
               // Code usually has a distinct color
-              .fontColor(seg.isCode ? '#D32F2F' : '#333333')
+              .fontColor(seg.isCode ? '#D32F2F' : seg.isLink ? '#1976D2' : '#333333')
               .fontWeight(seg.isBold ? FontWeight.Bold : FontWeight.Normal)
               .fontStyle(seg.isItalic ? FontStyle.Italic : FontStyle.Normal)
               .decoration({
-                type: seg.isStrikethrough ? TextDecorationType.LineThrough : TextDecorationType.None,
-                color: seg.isCode ? '#D32F2F' : '#333333' // Color is required for some engine versions
+                type: seg.isStrikethrough ? TextDecorationType.LineThrough : seg.isLink ? TextDecorationType.Underline : TextDecorationType.None,
+                color: seg.isCode ? '#D32F2F' : seg.isLink ? '#1976D2' : '#333333'
               })
               // Inline code background style
               .textBackgroundStyle(seg.isCode ? { color: '#F5F5F5', radius: 4 } : undefined)
+              .onClick(() => {
+                if (seg.isLink && seg.linkUrl) {
+                  this.openLink(seg.linkUrl);
+                }
+              })
           })
         }
         .width('100%')
@@ -85,14 +109,19 @@ export struct BlockView {
               Span(seg.content)
                 .fontSize(16)
                 .fontFamily(seg.isCode ? 'monospace' : 'sans-serif')
-                .fontColor(seg.isCode ? '#D32F2F' : '#333333')
+                .fontColor(seg.isCode ? '#D32F2F' : seg.isLink ? '#1976D2' : '#333333')
                 .fontWeight(seg.isBold ? FontWeight.Bold : FontWeight.Normal)
                 .fontStyle(seg.isItalic ? FontStyle.Italic : FontStyle.Normal)
                 .decoration({
-                  type: seg.isStrikethrough ? TextDecorationType.LineThrough : TextDecorationType.None,
-                  color: seg.isCode ? '#D32F2F' : '#333333'
+                  type: seg.isStrikethrough ? TextDecorationType.LineThrough : seg.isLink ? TextDecorationType.Underline : TextDecorationType.None,
+                  color: seg.isCode ? '#D32F2F' : seg.isLink ? '#1976D2' : '#333333'
                 })
                 .textBackgroundStyle(seg.isCode ? { color: '#F5F5F5', radius: 4 } : undefined)
+                .onClick(() => {
+                  if (seg.isLink && seg.linkUrl) {
+                    this.openLink(seg.linkUrl);
+                  }
+                })
             })
           }
           .layoutWeight(1)
@@ -114,14 +143,19 @@ export struct BlockView {
               Span(seg.content)
                 .fontSize(16)
                 .fontFamily(seg.isCode ? 'monospace' : 'sans-serif')
-                .fontColor(seg.isCode ? '#D32F2F' : '#333333')
+                .fontColor(seg.isCode ? '#D32F2F' : seg.isLink ? '#1976D2' : '#333333')
                 .fontWeight(seg.isBold ? FontWeight.Bold : FontWeight.Normal)
                 .fontStyle(seg.isItalic ? FontStyle.Italic : FontStyle.Normal)
                 .decoration({
-                  type: seg.isStrikethrough ? TextDecorationType.LineThrough : TextDecorationType.None,
-                  color: seg.isCode ? '#D32F2F' : '#333333'
+                  type: seg.isStrikethrough ? TextDecorationType.LineThrough : seg.isLink ? TextDecorationType.Underline : TextDecorationType.None,
+                  color: seg.isCode ? '#D32F2F' : seg.isLink ? '#1976D2' : '#333333'
                 })
                 .textBackgroundStyle(seg.isCode ? { color: '#F5F5F5', radius: 4 } : undefined)
+                .onClick(() => {
+                  if (seg.isLink && seg.linkUrl) {
+                    this.openLink(seg.linkUrl);
+                  }
+                })
             })
           }
           .layoutWeight(1)
@@ -143,14 +177,19 @@ export struct BlockView {
               Span(seg.content)
                 .fontSize(16)
                 .fontFamily(seg.isCode ? 'monospace' : 'sans-serif')
-                .fontColor(seg.isCode ? '#D32F2F' : '#333333')
+                .fontColor(seg.isCode ? '#D32F2F' : seg.isLink ? '#1976D2' : '#333333')
                 .fontWeight(seg.isBold ? FontWeight.Bold : FontWeight.Normal)
                 .fontStyle(seg.isItalic ? FontStyle.Italic : FontStyle.Normal)
                 .decoration({
-                  type: seg.isStrikethrough ? TextDecorationType.LineThrough : TextDecorationType.None,
-                  color: seg.isCode ? '#D32F2F' : '#333333'
+                  type: seg.isStrikethrough ? TextDecorationType.LineThrough : seg.isLink ? TextDecorationType.Underline : TextDecorationType.None,
+                  color: seg.isCode ? '#D32F2F' : seg.isLink ? '#1976D2' : '#333333'
                 })
                 .textBackgroundStyle(seg.isCode ? { color: '#F5F5F5', radius: 4 } : undefined)
+                .onClick(() => {
+                  if (seg.isLink && seg.linkUrl) {
+                    this.openLink(seg.linkUrl);
+                  }
+                })
             })
           }
           .layoutWeight(1)
@@ -166,14 +205,19 @@ export struct BlockView {
               Span(seg.content)
                 .fontSize(16)
                 .fontFamily(seg.isCode ? 'monospace' : 'sans-serif')
-                .fontColor(seg.isCode ? '#D32F2F' : '#666666')  // Slightly lighter color for quotes
+                .fontColor(seg.isCode ? '#D32F2F' : seg.isLink ? '#1976D2' : '#666666')
                 .fontWeight(seg.isBold ? FontWeight.Bold : FontWeight.Normal)
                 .fontStyle(seg.isItalic ? FontStyle.Italic : FontStyle.Normal)
                 .decoration({
-                  type: seg.isStrikethrough ? TextDecorationType.LineThrough : TextDecorationType.None,
-                  color: seg.isCode ? '#D32F2F' : '#666666'
+                  type: seg.isStrikethrough ? TextDecorationType.LineThrough : seg.isLink ? TextDecorationType.Underline : TextDecorationType.None,
+                  color: seg.isCode ? '#D32F2F' : seg.isLink ? '#1976D2' : '#666666'
                 })
                 .textBackgroundStyle(seg.isCode ? { color: '#F5F5F5', radius: 4 } : undefined)
+                .onClick(() => {
+                  if (seg.isLink && seg.linkUrl) {
+                    this.openLink(seg.linkUrl);
+                  }
+                })
             })
           }
           .width('100%')
