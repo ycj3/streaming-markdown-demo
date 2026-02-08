@@ -7,6 +7,7 @@ import {
   CodeFenceReducer,
   InlineCodeReducer,
   ListReducer,
+  OrderedListReducer,
 } from "./reducers";
 import { ReducerRegistry, createDefaultRegistry } from "./registry";
 import {
@@ -25,6 +26,7 @@ export {
   CodeFenceReducer,
   InlineCodeReducer,
   ListReducer,
+  OrderedListReducer,
 } from "./reducers";
 
 /**
@@ -58,6 +60,7 @@ export class BlockReducer {
   private codeFenceReducer: CodeFenceReducer;
   private inlineCodeReducer: InlineCodeReducer;
   private listReducer: ListReducer;
+  private orderedListReducer: OrderedListReducer;
 
   constructor(registry?: ReducerRegistry) {
     // Initialize context
@@ -68,6 +71,7 @@ export class BlockReducer {
     this.codeFenceReducer = new CodeFenceReducer();
     this.inlineCodeReducer = new InlineCodeReducer();
     this.listReducer = new ListReducer();
+    this.orderedListReducer = new OrderedListReducer();
     const paragraphReducer = new ParagraphReducer();
 
     // Use provided registry or create default
@@ -78,7 +82,8 @@ export class BlockReducer {
         this.headingReducer,
         this.codeFenceReducer,
         this.inlineCodeReducer,
-        this.listReducer
+        this.listReducer,
+        this.orderedListReducer
       );
   }
 
@@ -250,6 +255,11 @@ export class BlockReducer {
       return this.listReducer.startList(this.context);
     }
 
+    // Check ordered list trigger (only if not a heading/list start)
+    if (this.orderedListReducer.canStartOrderedList(char, this.context)) {
+      return this.orderedListReducer.startOrderedList(this.context, char);
+    }
+
     // Check inline code trigger
     if (this.inlineCodeReducer.canStartInlineCode(this.context)) {
       return this.inlineCodeReducer.startInlineCode(this.context);
@@ -267,6 +277,7 @@ export class BlockReducer {
     this.context.pendingBackticks = 0;
     this.context.languageBuffer = "";
     this.context.headingLevel = 0;
+    this.context.orderedListNumber = 0;
   }
 
   /**

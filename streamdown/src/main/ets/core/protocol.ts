@@ -30,6 +30,13 @@ export type ListItemBlock = {
   text: string
 }
 
+export type OrderedListItemBlock = {
+  id: number
+  type: 'orderedListItem'
+  number: number  // 1, 2, 3, etc.
+  text: string
+}
+
 export class TextSegment {
   content: string = ""
   isCode: boolean = false
@@ -38,7 +45,7 @@ export class TextSegment {
   isStrikethrough: boolean = false
 }
 
-export type Block = ParagraphBlock | CodeBlock | HeadingBlock | InlineCodeBlock | ListItemBlock
+export type Block = ParagraphBlock | CodeBlock | HeadingBlock | InlineCodeBlock | ListItemBlock | OrderedListItemBlock
 
 export type BlockDiff =
   | { kind: 'append'; block: Block }

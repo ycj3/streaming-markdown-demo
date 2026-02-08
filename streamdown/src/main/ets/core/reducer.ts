@@ -8,6 +8,7 @@ export {
   CodeFenceReducer,
   InlineCodeReducer,
   ListReducer,
+  OrderedListReducer,
 } from "./reducer/index";
 
 export type {

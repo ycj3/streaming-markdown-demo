@@ -30,7 +30,12 @@ Welcome to **StreamDown** - A streaming markdown renderer for HarmonyOS!
 - Third item with \`inline code\`
 - Nested styles: ***bold italic*** and ~~strikethrough~~
 
-## 4. Fenced Code Block
+## 4. Ordered Lists
+1. First ordered item
+2. Second ordered item with **bold**
+3. Third ordered item with \`code\`
+
+## 5. Fenced Code Block
 \`\`\`typescript
 function hello() {
   console.log("Hello StreamDown!");

@@ -17,6 +17,8 @@ export enum ParseMode {
   InlineCode = "inlineCode",
   /** Unordered list item */
   List = "list",
+  /** Ordered list item */
+  OrderedList = "orderedList",
 }
 
 /**
@@ -37,6 +39,8 @@ export interface ReducerContext {
   languageBuffer: string;
   /** Heading level */
   headingLevel: number;
+  /** Ordered list item number buffer */
+  orderedListNumber: number;
 }
 
 /**
@@ -92,5 +96,6 @@ export function createInitialContext(): ReducerContext {
     pendingBackticks: 0,
     languageBuffer: "",
     headingLevel: 0,
+    orderedListNumber: 0,
   };
 }
