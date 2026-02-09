@@ -9,11 +9,11 @@ struct Index {
   aboutToAppear() {
 // Demo text with various inline styles
     const text = `
-# StreamDown Demo
+# StreamingMarkdown Demo
 
-Welcome to **StreamDown** - A streaming markdown renderer for HarmonyOS!
+Welcome to **StreamingMarkdown** - A streaming markdown renderer for HarmonyOS!
 
-Visit our [GitHub repository](https://github.com/ycj3/streamdown-arkts-demo) for more info.
+Visit our [GitHub repository](https://github.com/ycj3/streaming-markdown) for more info.
 
 ## 1. Inline Styles
 - **Bold text** with double asterisks
@@ -54,7 +54,7 @@ Visit our [GitHub repository](https://github.com/ycj3/streamdown-arkts-demo) for
 ## 8. Fenced Code Block
 \`\`\`typescript
 function hello() {
-  console.log("Hello StreamDown!");
+  console.log("Hello StreamingMarkdown!");
 }
 \`\`\`
 

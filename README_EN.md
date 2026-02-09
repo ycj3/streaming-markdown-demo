@@ -1,8 +1,8 @@
-# StreamDown ArkTS Demo
+# StreamingMarkdown ArkTS Demo
 
 > [中文版本](./README.md)
 
-`StreamDown ArkTS Demo` is a streaming markdown renderer demo project for HarmonyOS ArkTS, designed for real-time LLM chat scenarios.
+`StreamingMarkdown ArkTS Demo` is a streaming markdown renderer demo project for HarmonyOS ArkTS, designed for real-time LLM chat scenarios.
 
 > **Live Demo**: Run in DevEco Studio to see the streaming rendering effect
 
@@ -27,7 +27,7 @@
 
    ```bash
    git clone <repository-url>
-   cd StreamDownDemo
+   cd StreamingMarkdownDemo
    ```
 
 2. **Open the project**
@@ -41,7 +41,7 @@
 
 ---
 
-## 📦 StreamDown Package Roadmap
+## 📦 StreamingMarkdown Package Roadmap
 
 > The roadmap represents planned directions and may change based on feedback.
 
@@ -99,11 +99,11 @@
 ## 🏗️ Project Structure
 
 ```
-StreamDownDemo/
+StreamingMarkdownDemo/
 ├── entry/              # Demo app entry
 │   └── src/main/ets/pages/
 │       └── Index.ets   # Demo page
-├── streamdown/         # HAR module (core library)
+├── streaming-markdown/  # HAR module (core library)
 │   ├── src/main/ets/
 │   │   ├── core/       # Parsing engine
 │   │   └── ui/         # UI components
