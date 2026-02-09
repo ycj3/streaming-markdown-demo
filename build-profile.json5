@@ -39,8 +39,8 @@
       ]
     },
     {
-      "name": "streamdown",
-      "srcPath": "./streamdown",
+      "name": "streaming_markdown",
+      "srcPath": "../streaming-markdown",
       "targets": [
         {
           "name": "default",

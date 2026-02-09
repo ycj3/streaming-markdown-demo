@@ -6,6 +6,6 @@
   author: "",
   license: "",
   dependencies: {
-    "@ycj3/streamdown": "file:../streamdown",
+    "@ycj3/streaming-markdown": "file:../../streaming-markdown",
   },
 }

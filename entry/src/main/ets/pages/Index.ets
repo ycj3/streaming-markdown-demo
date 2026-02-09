@@ -1,10 +1,10 @@
-import { StreamDown, createStreamDown } from '@ycj3/streamdown'
+import { StreamingMarkdown, createStreamingMarkdown } from '@ycj3/streaming-markdown'
 
 
 @Entry
 @Component
 struct Index {
-  private stream = createStreamDown()
+  private stream = createStreamingMarkdown()
 
   aboutToAppear() {
 // Demo text with various inline styles
@@ -12,6 +12,8 @@ struct Index {
 # StreamDown Demo
 
 Welcome to **StreamDown** - A streaming markdown renderer for HarmonyOS!
+
+Visit our [GitHub repository](https://github.com/ycj3/streamdown-arkts-demo) for more info.
 
 ## 1. Inline Styles
 - **Bold text** with double asterisks
@@ -24,7 +26,32 @@ Welcome to **StreamDown** - A streaming markdown renderer for HarmonyOS!
 - Verbatim: \`**this is not bold**\` (Markdown standard: code shields styles)
 - Mixed: **Bold** and then \`code\`
 
-## 3. Fenced Code Block
+## 3. Unordered Lists
+- First item with **bold**
+- Second item with *italic*
+- Third item with \`inline code\`
+- Nested styles: ***bold italic*** and ~~strikethrough~~
+
+## 4. Ordered Lists
+1. First ordered item
+2. Second ordered item with **bold**
+3. Third ordered item with \`code\`
+
+## 5. Task Lists
+- [ ] Unchecked task item
+- [x] Checked task item
+- [X] Another checked task
+
+## 6. Blockquotes
+> This is a blockquote
+> With multiple lines
+> And **bold** text inside
+
+## 7. Horizontal Rule
+
+---
+
+## 8. Fenced Code Block
 \`\`\`typescript
 function hello() {
   console.log("Hello StreamDown!");
@@ -50,7 +77,7 @@ Enjoy the smooth streaming experience! 🚀
   build() {
     Scroll() {
       Column() {
-        StreamDown({
+        StreamingMarkdown({
           controller: this.stream
         })
       }

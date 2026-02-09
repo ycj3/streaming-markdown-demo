@@ -10,12 +10,7 @@
   "modules": {
     ".": {
       "name": "",
-      "dependencies": {
-        "@ycj3/streamdown": {
-          "specifier": "file:streamdown",
-          "version": "file:streamdown"
-        }
-      },
+      "dependencies": {},
       "devDependencies": {
         "@ohos/hypium": {
           "specifier": "1.0.24",
@@ -29,29 +24,29 @@
       "dynamicDependencies": {},
       "maskedByOverrideDependencyMap": false
     },
-    "entry": {
-      "name": "entry",
-      "dependencies": {
-        "@ycj3/streamdown": {
-          "specifier": "file:streamdown",
-          "version": "file:streamdown"
-        }
-      },
+    "../streaming-markdown": {
+      "name": "streaming_markdown",
+      "dependencies": {},
       "devDependencies": {},
       "dynamicDependencies": {},
       "maskedByOverrideDependencyMap": false
     },
-    "streamdown": {
-      "name": "streamdown",
-      "dependencies": {},
+    "entry": {
+      "name": "entry",
+      "dependencies": {
+        "@ycj3/streaming-markdown": {
+          "specifier": "file:../streaming-markdown",
+          "version": "file:../streaming-markdown"
+        }
+      },
       "devDependencies": {},
       "dynamicDependencies": {},
       "maskedByOverrideDependencyMap": false
     }
   },
   "packages": {
-    "@ycj3/streamdown@file:streamdown": {
-      "storePath": "streamdown",
+    "@ycj3/streaming-markdown@file:../streaming-markdown": {
+      "storePath": "../streaming-markdown",
       "dependencies": {},
       "dynamicDependencies": {},
       "dev": false,
