@@ -1,17 +1,10 @@
-# StreamingMarkdown ArkTS Demo
+# streaming-markdown-demo
 
 > [中文版本](./README.md)
 
-`StreamingMarkdown ArkTS Demo` is a streaming markdown renderer demo project for HarmonyOS ArkTS, designed for real-time LLM chat scenarios.
+`streaming-markdown-demo` is the demonstration project for [streaming-markdown](https://github.com/ycj3/streaming-markdown.git).
 
 > **Live Demo**: Run in DevEco Studio to see the streaming rendering effect
-
-## 📺 Rendering Effect
-
-<div align="left">
-  <video src="https://github.com/user-attachments/assets/d4ba10a2-5311-4a15-b844-976112c95f36" width="300px" autoplay muted loop>
-  </video>
-</div>
 
 ## 🚀 Quick Start
 
@@ -26,8 +19,8 @@
 1. **Clone the repository**
 
    ```bash
-   git clone <repository-url>
-   cd StreamingMarkdownDemo
+   git clone https://github.com/ycj3/streaming-markdown-demo.git
+   cd streaming-markdown-demo
    ```
 
 2. **Open the project**
@@ -38,91 +31,6 @@
 3. **Run the Demo**
    - Connect a HarmonyOS device or start an emulator
    - Click the **Run** ▶️ button
-
----
-
-## 📦 StreamingMarkdown Package Roadmap
-
-> The roadmap represents planned directions and may change based on feedback.
-
-### v1.0.0 (Current)
-
-> Core Markdown rendering capabilities
-
-- [x] Streaming character-level parsing
-- [x] Basic rendering for headings, paragraphs, code blocks
-- [x] Inline styles (bold, italic, strikethrough, inline code)
-- [x] Code block copy functionality
-- [x] Basic syntax highlighting
-- [x] Official ohpm release
-
-### v1.1.0 (Planned)
-
-> Extended Markdown syntax support
-
-- [x] Unordered lists (`- item`)
-- [x] Ordered lists (`1. item`)
-- [x] Task lists (`- [ ] task`)
-- [x] Blockquotes (`> quote`)
-- [x] Horizontal rules (`---`)
-- [x] Link rendering (`[text](url)`)
-
-### v1.2.0 (Planned)
-
-> Tables and enhanced features
-
-- [ ] Table support (`| col1 | col2 |`)
-- [ ] Image rendering (`![alt](url)`)
-- [ ] LaTeX formula blocks (`$$...$$`)
-- [ ] Collapsible details (`<details>`)
-- [ ] Theme configuration API
-
-### v2.0.0 (Planned)
-
-> Stable release
-
-- [ ] Performance optimization (large data rendering)
-- [ ] Full unit test coverage
-- [ ] Complete TypeScript types
-- [ ] API stabilization
-- [ ] Detailed documentation and examples
-
-### v2.1.0+ (Future)
-
-- [ ] Mermaid diagram support
-- [ ] Custom component extensions
-- [ ] Virtual scroll optimization
-- [ ] Dark mode support
-
----
-
-## 🏗️ Project Structure
-
-```
-StreamingMarkdownDemo/
-├── entry/              # Demo app entry
-│   └── src/main/ets/pages/
-│       └── Index.ets   # Demo page
-├── streaming-markdown/  # HAR module (core library)
-│   ├── src/main/ets/
-│   │   ├── core/       # Parsing engine
-│   │   └── ui/         # UI components
-│   ├── README.md       # Chinese documentation
-│   └── README_EN.md    # English documentation
-└── build-profile.json5 # Build configuration
-```
-
----
-
-## 🤝 Contributing
-
-Issues and PRs are welcome! Please ensure:
-
-1. Code follows ArkTS coding standards
-2. New features include test cases
-3. Relevant documentation is updated
-
----
 
 ## 📮 Contact
 
