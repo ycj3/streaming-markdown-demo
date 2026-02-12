@@ -1,8 +1,8 @@
-# StreamDown ArkTS Demo
+# StreamingMarkdown ArkTS Demo
 
 > [English Version](./README_EN.md)
 
-`StreamDown ArkTS Demo` 是 HarmonyOS ArkTS 的流式 Markdown 渲染器演示项目，专为实时 LLM 对话场景设计。
+`StreamingMarkdown ArkTS Demo` 是 HarmonyOS ArkTS 的流式 Markdown 渲染器演示项目，专为实时 LLM 对话场景设计。
 
 > **在线体验**: 在 DevEco Studio 中运行，查看流式渲染效果
 
@@ -26,8 +26,8 @@
 1. **克隆仓库**
 
    ```bash
-   git clone https://github.com/ycj3/streamdown-arkts-demo.git
-   cd StreamDownDemo
+   git clone https://github.com/ycj3/streaming-markdown.git
+   cd StreamingMarkdownDemo
    ```
 
 2. **打开项目**
@@ -41,7 +41,7 @@
 
 ---
 
-## 📦 StreamDown 包开发路线图
+## 📦 StreamingMarkdown 包开发路线图
 
 > The roadmap represents planned directions and may change based on feedback.
 
@@ -100,11 +100,11 @@
 ## 🏗️ 项目结构
 
 ```
-StreamDownDemo/
+StreamingMarkdownDemo/
 ├── entry/              # 示例应用入口
 │   └── src/main/ets/pages/
 │       └── Index.ets   # Demo 页面
-├── streamdown/         # HAR 模块（核心库）
+├── streaming-markdown/  # HAR 模块（核心库）
 │   ├── src/main/ets/
 │   │   ├── core/       # 解析引擎
 │   │   └── ui/         # UI 组件
